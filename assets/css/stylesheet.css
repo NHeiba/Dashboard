@@ -1,0 +1,60 @@
+* {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+body {
+    background-color: #15222b;
+}
+
+.bg-custom {
+    background-color: #21313C;
+}
+
+.btn {
+    box-shadow: none !important;
+    border-radius: 15px !important;
+}
+
+.btn-dark:hover {
+    background-color: #445b6b !important;
+}
+
+.custom-select {
+    background-color: #21313C !important;
+    box-shadow: none !important;
+    color: #fff !important;
+    width: fit-content;
+}
+.wrapper{
+    background-color: #21313C;
+    border-radius: 0.75rem;
+    height: 100%;
+}
+.rounded{
+    border-radius: 1.2rem !important;
+}
+
+h1 {
+    background-color: #f7a600;
+    background-image: linear-gradient(45deg, #e9e9e9, #f7a600);
+    background-size: 100%;
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+    /* font-size: calc(1vw + 1.1vh); */
+  }
+  
+  .custom-select{
+      border-color: #15222b !important;
+  }
+
+  p{
+      color: #fff;
+
+  }
+
+  div{
+    border-radius: 20px;
+}
