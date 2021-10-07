@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conbility GmbH Dashboard</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@mongodb-js/charts-embed-dom@beta"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@mongodb-js/charts-embed-dom"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/stylesheet.css">
+</head>
+<body>
+    <div class="container-fluid mt-1 px-4">
+        <!-- ----------------------------------------------------------------------- -->
+        <!--                                 navbar                                  -->
+        <!-- ----------------------------------------------------------------------- -->
+        <nav class="navbar navbar-dark bg-custom rounded mt-3">
+            <a class="navbar-brand align-top text-center mx-auto " href="#">
+                <img src="assets/img/light-logo.svg" class="d-inline-block img-fluid" style="width: 25%;" alt="Conbility GmbH">
+            </a>
+        </nav>
+        <!-- ----------------------------------------------------------------------- -->
+        <!--                             KPIs and Images                             -->
+        <!-- ----------------------------------------------------------------------- -->
+        <div class="row mt-1" >
+            <!-- ------------------------ First Column - Images ------------------------ -->
+            <div class="col-xl-2 col-12 mx-auto text-center my-auto">
+                <h1>Data Acquisition Kit</h1>
+                <img src="assets/img/xdk.svg" class="img-fluid" style="width: 4rem;" alt="xdk">
+                <img src="assets/img/poga.svg" class="img-fluid ml-5" alt="poga" style="width: 8rem;">
+            </div>
+            <!-- ----------- second column - total number of finished parts ------------ -->
+            <div class="col-xl-2 col-4">
+                <div class="row">
+                    <div class="col ">
+                        <div class="text-right align-bottom">
+                            <button class="btn btn-sm btn-dark" id="refreshButton">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                        </div>
+                        <div id="chart"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- ------------------------- third column - OEE -------------------------- -->
+            <div class="col-xl-2 col-4">
+                <div class="row">
+                    <div class="col ">
+                        <div class="text-right align-bottom">
+                            <button class="btn btn-sm btn-dark" id="refreshButtonOEE">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                        </div>
+                        <div id="chartOEE"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- ----------- fourth column - Machine production utilization number ------------ -->
+            <div class="col-xl-2 col-4">
+                <div class="row">
+                    <div class="col ">
+                        <div class="text-right align-bottom">
+                            <button class="btn btn-sm btn-dark" id="refreshButtonMPU">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                        </div>
+                        <div id="chartMPU"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- --------- fifth column - machine production utilization gauge ---------- -->
+
+<div class="col-xl-2 col-12">
+    <div class="row">
+        <div class="col-10">
+            <button class="btn btn-sm btn-dark" id="changeGauge">Show OEE Gauge</button>
+        </div>
+        <div class="col-2">
+            <div class="text-right align-bottom">
+                <button class="btn btn-sm btn-dark" id="refreshButtonMPUC" style="display: block;">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </button>
+                <button class="btn btn-sm btn-dark" id="refreshButtonOEEC" style="display: none;">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+        <div id="chartMPUC" style="display: block;"></div>
+        <div id="chartOEEC" style="display: none;"></div>
+</div>
+
+
+            <!-- <div class="col-xl-2 col-12">
+                <button class="btn btn-sm btn-dark" id="changeGauge">Show OEE Gauge</button>
+                <div style="display: block;" id="mpuG">
+                    <div class="row">
+                        <div class="col">
+                            <div class="text-right align-bottom">
+                                <button class="btn btn-sm btn-dark" id="refreshButtonMPUC">
+                                    <i class="bi bi-arrow-clockwise"></i>
+                                </button>
+                            </div>
+                            <div id="chartMPUC"></div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- ---------------------- fifth column - OEE gauge ----------------------- -->
+                <!-- <div style="display: none;" id="oeeG">
+                    <div class="row">
+                        <div class="col">
+                            <div class="text-right align-bottom">
+                                <button class="btn btn-sm btn-dark" id="refreshButtonOEEC">
+                                    <i class="bi bi-arrow-clockwise"></i>
+                                </button>
+                            </div>
+                            <div id="chartOEEC"></div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- ---------------------- sixth column - temperature gauge ----------------------- -->
+            <div class="col-xl-2 col-12">
+                <div class="row">
+                    <div class="col-10">
+                        <div class="btn-group" role="group" aria-label="Temperatures">
+                            <button type="button" class="btn btn-dark btn-sm" id="avg">Avg. Temp.</button>
+                            <button type="button" class="btn btn-dark btn-sm" id="max">Max. Temp.</button>
+                            <button type="button" class="btn btn-dark btn-sm" id="min">Min. Temp.</button>
+                          </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="text-right align-bottom">
+                            <button class="btn btn-sm btn-dark" id="refreshButtonTempAvg" style="display: block;"> 
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                            <button class="btn btn-sm btn-dark" id="refreshButtonTempMin" style="display: none;"> 
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                            <button class="btn btn-sm btn-dark" id="refreshButtonTempMax" style="display: none;"> 
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="chartTempAvgC" style="display: block;"></div>
+                <div id="chartTempMin" style="display: none;"></div>
+                <div id="chartTempMax" style="display: none;"></div>
+            </div>
+        </div>
+        <!-- ----------------------------------------------------------------------- -->
+        <!--                           charts and row data                           -->
+        <!-- ----------------------------------------------------------------------- -->
+        <div class="row mx-auto">
+             <!-- ------------- OEE & Machine production utilization chart -------------- -->
+             <div class="col-xl-9 col-12 p-1 h-100">
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group" >
+                            <select class="custom-select" id="date">
+                                <option selected value="">All Days</option>
+                                <option value="2021-08-24">Last 10 Days</option>
+                                <option value="2021-08-02">Last 30 Days</option>
+                                <option value="01-Jul-2021">Last 2 Months</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-right align-bottom">
+                            <button class="btn btn-sm btn-dark" id="refreshButtonOP">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="chartOP"></div>
+            </div>
+            <!-- ------------------------ Magnetometer row data ------------------------ -->
+
+
+            <div class="col-xl-3 col-12 h-100 p-1">
+                <div class="row">
+                    <div class="col-11 mb-1">
+                        <button class="btn btn-sm btn-dark align-bottom" id="changeRow">Show Acceleration Row Data</button>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-right align-bottom">
+                            <button class="btn btn-sm btn-dark" id="refreshButtonMag" style="display: block;">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                            <button class="btn btn-sm btn-dark" id="refreshButtonAccR" style="display: none;">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="chartMag" style="display: block;"></div>
+                <div id="chartAccR" style="display: none;"></div>
+            </div>
+
+
+
+
+
+            <!-- <div class="col-xl-3 col-12 p-1 h-100">
+                <button class="btn btn-sm btn-dark align-bottom" id="changeRow">Show Acceleration Row Data</button>
+                <div  id="magRow" style="display: block;">
+                    <div class="text-right align-bottom">
+                        <button class="btn btn-sm btn-dark" id="refreshButtonMag">
+                            <i class="bi bi-arrow-clockwise"></i>
+                        </button>
+                    </div>
+                    <div id="chartMag"></div>
+                </div> -->
+                <!-- ------------------------ acceleration row data ------------------------ -->
+                <!-- <div  id="accRow" style="display: none;">
+                    <div class="text-right align-bottom">
+                        <button class="btn btn-sm btn-dark" id="refreshButtonAccR">
+                            <i class="bi bi-arrow-clockwise"></i>
+                        </button>
+                    </div>
+                    <div id="chartAccR"></div>
+                </div>
+            </div> -->
+            <!-- -------------------------- Temperature chart -------------------------- -->
+            <div class="col-xl-4 col-12 p-1 h-100">
+                <div class="col ">
+                    <div class="text-right align-bottom">
+                        <button class="btn btn-sm btn-dark" id="refreshButtonTemp">
+                            <i class="bi bi-arrow-clockwise"></i>
+                        </button>
+                    </div>
+                    <div id="chartTemp"></div>
+                </div>
+            </div>
+            <!-- --------------------------- finished parts ---------------------------- -->
+            <div class="col-xl-4 col-12 p-1 h-100">
+                <div class="col ">
+                    <div class="text-right align-bottom">
+                        <button class="btn btn-sm btn-dark" id="refreshButtonFParts">
+                            <i class="bi bi-arrow-clockwise"></i>
+                        </button>
+                    </div>
+                    <div id="chartFParts"></div>
+                </div>
+            </div>
+            <!-- ------------------------- acceleration chart -------------------------- -->
+            <div class="col-xl-4 col-12 p-1 h-100">
+                <div class="col ">
+                    <div class="text-right align-bottom">
+                        <button class="btn btn-sm btn-dark" id="refreshButtonAcc">
+                            <i class="bi bi-arrow-clockwise"></i>
+                        </button>
+                    </div>
+                    <div id="chartAcc"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mt-5 pt-3 text-center mx-auto">
+                <footer>
+                    <p>
+                        © 2021 Conbility GmbH | All rights reserved.
+                    </p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script src="javascript4.js"></script>
+</body>
+</html>
